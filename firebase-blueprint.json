@@ -1,0 +1,81 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores student, mentor, or recruiter profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "Full name" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["student", "mentor", "recruiter"] },
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "careerGoal": { "type": "string" },
+        "skills": { "type": "object", "description": "Map of skill names to scores" },
+        "badges": { 
+          "type": "array", 
+          "items": { 
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "issuedAt": { "type": "string", "format": "date-time" },
+              "icon": { "type": "string" }
+            }
+          } 
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "SkillRoadmap": {
+      "title": "Skill Roadmap",
+      "description": "AI-generated learning roadmap for a specific career goal.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Owner UID" },
+        "goal": { "type": "string" },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "month": { "type": "string" },
+              "topics": { "type": "array", "items": { "type": "string" } },
+              "resources": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Internship": {
+      "title": "Internship",
+      "description": "Internship or project listing.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "company": { "type": "string" },
+        "description": { "type": "string" },
+        "stipend": { "type": "string" },
+        "location": { "type": "string" },
+        "postedBy": { "type": "string", "description": "Recruiter UID" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "UserProfile",
+      "description": "Individual user profiles"
+    },
+    "/roadmaps/{roadmapId}": {
+      "schema": "SkillRoadmap",
+      "description": "Learning roadmaps"
+    },
+    "/internships/{internshipId}": {
+      "schema": "Internship",
+      "description": "Internship listings"
+    }
+  }
+}
