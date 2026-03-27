@@ -14,6 +14,7 @@ import Roadmap from './pages/Roadmap';
 import Internships from './pages/Internships';
 import Profile from './pages/Profile';
 import Assessment from './pages/Assessment';
+import Projects from './pages/Projects';
 import Navbar from './components/Navbar';
 
 export default function App() {
@@ -83,6 +84,10 @@ export default function App() {
             <Route 
               path="/assessment" 
               element={user && profile ? <Assessment user={user} profile={profile} /> : <Navigate to="/" />} 
+            />
+            <Route 
+              path="/projects" 
+              element={user && profile ? <Projects user={user} profile={profile} /> : <Navigate to="/" />} 
             />
           </Routes>
         </main>

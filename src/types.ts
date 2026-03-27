@@ -41,3 +41,32 @@ export interface Internship {
   postedBy: string;
   createdAt: string;
 }
+
+export interface ProjectChallenge {
+  id?: string;
+  title: string;
+  description: string;
+  requirements: string[];
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  category: string;
+  createdAt: string;
+}
+
+export interface ProjectEvaluation {
+  score: number;
+  feedback: string;
+  strengths: string[];
+  improvements: string[];
+}
+
+export interface ProjectSubmission {
+  id?: string;
+  challengeId: string;
+  uid: string;
+  githubUrl: string;
+  demoUrl?: string;
+  description: string;
+  evaluation?: ProjectEvaluation;
+  status: 'pending' | 'evaluated';
+  createdAt: string;
+}

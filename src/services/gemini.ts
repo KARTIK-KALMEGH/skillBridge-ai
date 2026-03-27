@@ -78,3 +78,40 @@ export async function analyzeSkillGap(goal: string, currentSkills: string[]) {
 
   return JSON.parse(response.text);
 }
+
+export async function evaluateProject(challengeTitle: string, submissionData: { githubUrl: string, description: string }) {
+  const model = "gemini-3-flash-preview";
+  const prompt = `As an expert technical reviewer, evaluate this student project submission for the challenge: "${challengeTitle}".
+  
+  Submission Details:
+  GitHub URL: ${submissionData.githubUrl}
+  Student's Description: ${submissionData.description}
+  
+  Please provide a constructive evaluation including:
+  1. A score out of 100.
+  2. Detailed feedback on code quality, architecture, and meeting requirements.
+  3. A list of key strengths.
+  4. A list of specific areas for improvement.
+  
+  Return the evaluation in JSON format.`;
+
+  const response = await ai.models.generateContent({
+    model,
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          score: { type: Type.NUMBER },
+          feedback: { type: Type.STRING },
+          strengths: { type: Type.ARRAY, items: { type: Type.STRING } },
+          improvements: { type: Type.ARRAY, items: { type: Type.STRING } }
+        },
+        required: ["score", "feedback", "strengths", "improvements"]
+      }
+    }
+  });
+
+  return JSON.parse(response.text);
+}

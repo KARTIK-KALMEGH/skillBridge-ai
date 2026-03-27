@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { User, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { UserProfile } from '../types';
-import { LayoutDashboard, MessageSquare, Map, Briefcase, User as UserIcon, LogOut, Sparkles } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Map, Briefcase, Code, User as UserIcon, LogOut, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
   user: User | null;
@@ -42,6 +42,10 @@ export default function Navbar({ user, profile }: NavbarProps) {
             <Link to="/internships" className="flex items-center gap-1.5 text-slate-600 hover:text-indigo-600 transition-colors font-medium">
               <Briefcase className="w-4 h-4" />
               <span>Internships</span>
+            </Link>
+            <Link to="/projects" className="flex items-center gap-1.5 text-slate-600 hover:text-indigo-600 transition-colors font-medium">
+              <Code className="w-4 h-4" />
+              <span>Projects</span>
             </Link>
           </div>
         )}
